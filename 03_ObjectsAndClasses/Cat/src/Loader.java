@@ -9,6 +9,10 @@ public class Loader
         Cat anton = new Cat();
         Cat murka = new Cat();
 
+        Cat kitten_1 = getKitten();
+        Cat kitten_2 = getKitten();
+        Cat kitten_3 = getKitten();
+
         System.out.println("Tima weight: " + tima.getWeight());
         System.out.println("Oleg weight: " + oleg.getWeight());
         System.out.println("Vasya weight: " + vasya.getWeight());
@@ -39,8 +43,9 @@ public class Loader
         System.out.println("Oleg weight: " + oleg.getWeight());
         oleg.pee();
         System.out.println("Oleg weight after pee: " + oleg.getWeight());
+    }
 
-
-
+    private static Cat getKitten(){
+        return new Cat(1100.0);
     }
 }
