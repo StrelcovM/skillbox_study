@@ -52,4 +52,13 @@ public class Cat
             return "Playing";
         }
     }
+
+    public Double getFeedWeight(){
+        return weight - originWeight;
+    }
+
+    public void pee() {
+        weight -= 10 * Math.random();
+        System.out.println("pee pee...");
+    }
 }

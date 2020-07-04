@@ -33,5 +33,14 @@ public class Loader
 
         System.out.println("\nTima status: " + tima.getStatus());
 
+        System.out.println("\nOleg weight: " + oleg.getWeight());
+        oleg.feed(150.0);
+        System.out.println("\nOleg feeds: " + oleg.getFeedWeight());
+        System.out.println("Oleg weight: " + oleg.getWeight());
+        oleg.pee();
+        System.out.println("Oleg weight after pee: " + oleg.getWeight());
+
+
+
     }
 }
