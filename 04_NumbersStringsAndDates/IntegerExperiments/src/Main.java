@@ -16,7 +16,7 @@ public class Main
         Integer res = 0;
         String num = number.toString();
         for(int  i = 0; i < num.length(); i++) {
-            res += Integer.parseInt(String.valueOf(num.charAt(i)));
+            res += Character.getNumericValue(num.charAt(i));
         }
         return res;
     }
