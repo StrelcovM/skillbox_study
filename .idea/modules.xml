@@ -13,6 +13,7 @@
       <module fileurl="file://$PROJECT_DIR$/03_ObjectsAndClasses/RoadController/RoadController.iml" filepath="$PROJECT_DIR$/03_ObjectsAndClasses/RoadController/RoadController.iml" />
       <module fileurl="file://$PROJECT_DIR$/04_NumbersStringsAndDates/StringExperiments/StringExperiments.iml" filepath="$PROJECT_DIR$/04_NumbersStringsAndDates/StringExperiments/StringExperiments.iml" />
       <module fileurl="file://$PROJECT_DIR$/04_NumbersStringsAndDates/SymbolCode/SymbolCode.iml" filepath="$PROJECT_DIR$/04_NumbersStringsAndDates/SymbolCode/SymbolCode.iml" />
+      <module fileurl="file://$PROJECT_DIR$/04_NumbersStringsAndDates/TextSplitByWords/TextSplitByWords.iml" filepath="$PROJECT_DIR$/04_NumbersStringsAndDates/TextSplitByWords/TextSplitByWords.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/java_basics.iml" filepath="$PROJECT_DIR$/.idea/java_basics.iml" />
     </modules>
   </component>
