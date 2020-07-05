@@ -1,7 +1,5 @@
-public class Main
-{
-    public static void main(String[] args)
-    {
+public class Main {
+    public static void main(String[] args) {
         Container container = new Container();
         Main main = new Main();
         container.count += 7843;
@@ -10,12 +8,11 @@ public class Main
         System.out.println(main.sumDigits(5059191));
     }
 
-    public Integer sumDigits(Integer number)
-    {
+    public Integer sumDigits(Integer number) {
         //@TODO: write code here
         Integer res = 0;
         String num = number.toString();
-        for(int  i = 0; i < num.length(); i++) {
+        for (int i = 0; i < num.length(); i++) {
             res += Character.getNumericValue(num.charAt(i));
         }
         return res;
