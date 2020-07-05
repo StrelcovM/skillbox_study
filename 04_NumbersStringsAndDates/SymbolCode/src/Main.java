@@ -8,8 +8,8 @@ public class Main {
 
         System.out.println();
 
-        for (int i = 0; i < alphabetRus.length(); i++){
-            System.out.println(alphabetRus.charAt(i) + ": " + String.format("%04X", (int)alphabetRus.charAt(i)));
+        for (int i = 0; i < alphabetRus.length(); i++) {
+            System.out.println(alphabetRus.charAt(i) + ": " + String.format("%04X", (int) alphabetRus.charAt(i)));
         }
     }
 }
