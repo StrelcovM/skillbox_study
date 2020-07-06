@@ -9,8 +9,6 @@ public class Main {
 
     }
     private static String searchAndReplaceDiamonds(String text, String placeholder){
-        String result = "";
-        result = text.substring(0, text.indexOf("<")) + placeholder + text.substring(text.indexOf(">") + 1);
-        return result;
+        return text.replaceAll("<.+>", placeholder);
     }
 }
