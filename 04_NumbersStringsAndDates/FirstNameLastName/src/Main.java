@@ -5,8 +5,10 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         String name = sc.nextLine();
 
-        System.out.println("Фамилия: " + name.substring(0, name.indexOf(" ")));
-        System.out.println("Имя: " + name.substring(name.indexOf(" ") + 1, name.lastIndexOf(" ")));
-        System.out.println("Отчество: " + name.substring(name.lastIndexOf(" ") + 1));
+        String[] text = name.split(" ");
+
+        System.out.println("Фамилия: " + text[0]);
+        System.out.println("Имя: " + text[1]);
+        System.out.println("Отчество: " + text[2]);
     }
 }
