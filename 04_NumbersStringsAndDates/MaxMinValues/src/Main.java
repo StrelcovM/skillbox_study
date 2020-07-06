@@ -9,9 +9,9 @@ public class Main {
         System.out.println("Max_long: " + Long.MAX_VALUE);
         System.out.println("Min_long: " + Long.MIN_VALUE);
         System.out.println("Max_float: " + Float.MAX_VALUE);
-        System.out.println("Min_float: " + Float.MIN_VALUE);
+        System.out.println("Min_float: " + -Float.MAX_VALUE);
         System.out.println("Max_double: " + Double.MAX_VALUE);
-        System.out.println("Min_double: " + Double.MIN_VALUE);
+        System.out.println("Min_double: " + -Double.MAX_VALUE);
         System.out.println("Max_character: " + Character.MAX_VALUE);
         System.out.println("Min_character: " + Character.MIN_VALUE);
         System.out.println("True_boolean: " + Boolean.TRUE);
