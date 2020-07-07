@@ -9,7 +9,7 @@ public class Main {
             text[text.length - i - 1] = rev;
         }
 
-        for(String s : text)
+        for (String s : text)
             System.out.print(s + " ");
     }
 }
