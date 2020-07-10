@@ -1,8 +1,9 @@
-import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class Main {
-    private static HashSet<String> emails = new HashSet<>();
+    private static Set<String> emails = new TreeSet<>();
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
