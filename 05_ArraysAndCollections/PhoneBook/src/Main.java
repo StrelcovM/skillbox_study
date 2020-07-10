@@ -4,7 +4,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 public class Main {
-    private static Map<Integer, String> phoneBook = new TreeMap<>();
+    private static Map<String, String> phoneBook = new TreeMap<>();
     private static Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
@@ -13,7 +13,7 @@ public class Main {
             String cmd = sc.nextLine();
 
             if (cmd.equals("LIST")) {
-                for (Integer number : phoneBook.keySet())
+                for (String number : phoneBook.keySet())
                     System.out.println(number + " " + phoneBook.get(number));
             } else
                 checkContact(cmd);
@@ -21,29 +21,29 @@ public class Main {
     }
 
     private static void checkContact(String cmd) {
-        boolean containsName = false;
+        boolean containsNumber = false;
 
-        if (cmd.matches("\\d+")) {
-            if (phoneBook.containsKey(Integer.parseInt(cmd)))
-                System.out.println(phoneBook.get(Integer.parseInt(cmd)) + " " + cmd);
-            else {
-                System.out.print("Enter name: ");
-                phoneBook.put(Integer.parseInt(cmd), sc.nextLine());
-            }
-        }
+        if (cmd.matches("^((8|\\+7)[\\- ]?)?(\\(?\\d{3,4}\\)?[\\- ]?)?[\\d\\- ]{5,10}$")) {
+            Set<String> names = phoneBook.keySet();
 
-        if (cmd.matches("\\D+")) {
-            Set<Integer> numbers = phoneBook.keySet();
-
-            for (Integer number : numbers)
-                if (phoneBook.get(number).equals(cmd)) {
-                    System.out.println(cmd + " " + number);
-                    containsName = true;
+            for (String name : names)
+                if (phoneBook.get(name).equals(cmd)) {
+                    System.out.println(name + " " + cmd);
+                    containsNumber = true;
                 }
 
-            if(!containsName) {
+            if (!containsNumber) {
+                System.out.print("Enter name: ");
+                phoneBook.put(sc.nextLine(), cmd);
+            }
+        } else
+//        if (cmd.matches("\\D+"))
+        {
+            if (phoneBook.containsKey(cmd))
+                System.out.println(cmd + " " + phoneBook.get(cmd));
+            else {
                 System.out.print("Enter number: ");
-                phoneBook.put(sc.nextInt(), cmd);
+                phoneBook.put(cmd, sc.nextLine());
             }
         }
     }
