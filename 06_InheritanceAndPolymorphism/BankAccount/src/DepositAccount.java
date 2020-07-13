@@ -1,7 +1,7 @@
 import java.util.Date;
 
 public class DepositAccount extends BankAccount {
-    public Date lastDeposit;
+    private Date lastDeposit;
 
     public DepositAccount(double amount) {
         if (amount > 0)
