@@ -1,24 +1,24 @@
 package bank;
 
 public abstract class Client {
-    protected double deposit;
+    protected double balance;
 
-    protected abstract void getInfo();
+    public abstract String getInfo();
 
-    protected double getDeposit() {
-        return deposit;
+    protected double getBalance() {
+        return balance;
     }
 
-    protected void putMoney(double amount) {
+    public void putMoney(double amount) {
         if (amount > 0)
-            deposit += amount;
+            balance += amount;
         else
             System.out.println("the amount cannot be negative");
     }
 
-    protected void getMoney(double amount) {
-        if (deposit - amount > 0)
-            deposit -= amount;
+    public void getMoney(double amount) {
+        if (balance - amount > 0)
+            balance -= amount;
         else
             System.out.println("insufficient funds on the account");
     }

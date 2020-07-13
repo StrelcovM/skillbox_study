@@ -3,18 +3,24 @@ package bank;
 public class SoleProprietor extends Client {
 
     @Override
-    protected void getInfo() {
-
+    public String getInfo() {
+        return "Deposits up to one thousand Commission 1%. " +
+                "Deposits over to one thousand Commission 0,5%. " +
+                "Withdrawals is free. Balance: "
+                + getBalance();
     }
 
     @Override
-    public double getDeposit() {
-        return super.getDeposit();
+    protected double getBalance() {
+        return super.getBalance();
     }
 
     @Override
     public void putMoney(double amount) {
-        super.putMoney(amount);
+        if (amount < 1000)
+            super.putMoney(amount - (amount / 100));
+        else
+            super.putMoney(amount - (amount / 200));
     }
 
     @Override

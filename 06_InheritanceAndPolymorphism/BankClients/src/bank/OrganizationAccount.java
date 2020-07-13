@@ -3,13 +3,15 @@ package bank;
 public class OrganizationAccount extends Client{
 
     @Override
-    public void getInfo() {
-
+    public String getInfo() {
+        return "Withdrawals Commission 1%. " +
+                "Deposits is free. " +
+                "Balance: " + getBalance();
     }
 
     @Override
-    public double getDeposit() {
-        return super.getDeposit();
+    protected double getBalance() {
+        return super.getBalance();
     }
 
     @Override
@@ -19,6 +21,6 @@ public class OrganizationAccount extends Client{
 
     @Override
     public void getMoney(double amount) {
-        super.getMoney(amount);
+        super.getMoney(amount + (amount / 100));
     }
 }

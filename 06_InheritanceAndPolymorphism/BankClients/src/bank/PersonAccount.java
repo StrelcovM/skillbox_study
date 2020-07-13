@@ -3,13 +3,13 @@ package bank;
 public class PersonAccount extends Client {
 
     @Override
-    public void getInfo() {
-
+    public String getInfo() {
+        return "withdrawals and deposits is free. Balance: " + getBalance();
     }
 
     @Override
-    public double getDeposit() {
-        return super.getDeposit();
+    protected double getBalance() {
+        return super.getBalance();
     }
 
     @Override
