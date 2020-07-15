@@ -9,7 +9,6 @@ public class Main {
     }
 
     public Integer sumDigits(Integer number) {
-        //@TODO: write code here
         Integer res = 0;
         String num = number.toString();
         for (int i = 0; i < num.length(); i++) {
