@@ -6,6 +6,10 @@ public class Customer
 
     public Customer(String name, String phone, String eMail)
     {
+        if (!phone.matches("\\+\\d{11}"))
+            throw new IllegalArgumentException("Invalid phone number!");
+        if (!eMail.matches(".+@.+\\..+"))
+            throw new IllegalArgumentException("Invalid email!");
         this.name = name;
         this.phone = phone;
         this.eMail = eMail;

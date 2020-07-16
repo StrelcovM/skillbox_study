@@ -9,11 +9,17 @@ public class CustomerStorage
         storage = new HashMap<>();
     }
 
-    public void addCustomer(String data)
+    public void addCustomer(String data) throws IllegalArgumentException
     {
         String[] components = data.split("\\s+");
+        if (components.length != 4)
+            throw new IllegalArgumentException("Wrong argument length!");
         String name = components[0] + " " + components[1];
-        storage.put(name, new Customer(name, components[3], components[2]));
+        try {
+            storage.put(name, new Customer(name, components[3], components[2]));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public void listCustomers()
