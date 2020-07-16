@@ -1,8 +1,7 @@
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     private static String staffFile = "C:\\Users\\Maxim\\Desktop\\hw_skillbox\\gitlab\\java_basics\\07_AdvancedOOPFeatures\\LambdaExpressions\\data\\staff.txt";
@@ -11,20 +10,9 @@ public class Main {
     public static void main(String[] args) {
         ArrayList<Employee> staff = loadStaffFromFile();
 
-        staff.sort((o1, o2) -> {
-            if (o2.getSalary() < o1.getSalary() )
-                    return 1;
-            if (o2.getSalary() > o1.getSalary())
-                return -1;
-            if (o1.getSalary().equals(o2.getSalary()))
-                return o1.getName().compareTo(o2.getName());
-
-            return 0;
-
-        });
-
-        for (Employee employee : staff)
-            System.out.println(employee);
+        staff.stream()
+                .filter(employee -> employee.getWorkStart().getYear() == 117)
+                .max(Comparator.comparing(Employee::getSalary)).ifPresent(System.out::println);
     }
 
     private static ArrayList<Employee> loadStaffFromFile() {
