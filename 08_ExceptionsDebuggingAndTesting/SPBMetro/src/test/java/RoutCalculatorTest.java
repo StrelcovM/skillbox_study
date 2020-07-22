@@ -6,29 +6,30 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RoutCalculatorTest extends TestCase {
-    List<Station> routOnLine;
+    RouteCalculator routCalculator;
+    StationIndex stationIndex;
 
     @Override
     protected void setUp() throws Exception {
-        StationIndex stationIndex = new StationIndex();
+        stationIndex = new StationIndex();
 
         stationIndex.addLine(new Line(1, "first"));
         stationIndex.addLine(new Line(2, "second"));
         stationIndex.addLine(new Line(3, "third"));
 
-        stationIndex.addStation(new Station("first_1",stationIndex.getLine(1)));
-        stationIndex.addStation(new Station("first_2",stationIndex.getLine(1)));
-        stationIndex.addStation(new Station("first_3",stationIndex.getLine(1)));
+        stationIndex.addStation(new Station("first_1", stationIndex.getLine(1)));
+        stationIndex.addStation(new Station("first_2", stationIndex.getLine(1)));
+        stationIndex.addStation(new Station("first_3", stationIndex.getLine(1)));
 
-        stationIndex.addStation(new Station("second_1",stationIndex.getLine(2)));
-        stationIndex.addStation(new Station("second_2",stationIndex.getLine(2)));
-        stationIndex.addStation(new Station("second_3",stationIndex.getLine(2)));
+        stationIndex.addStation(new Station("second_1", stationIndex.getLine(2)));
+        stationIndex.addStation(new Station("second_2", stationIndex.getLine(2)));
+        stationIndex.addStation(new Station("second_3", stationIndex.getLine(2)));
 
-        stationIndex.addStation(new Station("third_1",stationIndex.getLine(3)));
-        stationIndex.addStation(new Station("third_2",stationIndex.getLine(3)));
-        stationIndex.addStation(new Station("third_3",stationIndex.getLine(3)));
-        stationIndex.addStation(new Station("third_4",stationIndex.getLine(3)));
-        stationIndex.addStation(new Station("third_5",stationIndex.getLine(3)));
+        stationIndex.addStation(new Station("third_1", stationIndex.getLine(3)));
+        stationIndex.addStation(new Station("third_2", stationIndex.getLine(3)));
+        stationIndex.addStation(new Station("third_3", stationIndex.getLine(3)));
+        stationIndex.addStation(new Station("third_4", stationIndex.getLine(3)));
+        stationIndex.addStation(new Station("third_5", stationIndex.getLine(3)));
 
         stationIndex.getLine(1).addStation(stationIndex.getStation("first_1"));
         stationIndex.getLine(1).addStation(stationIndex.getStation("first_2"));
@@ -69,23 +70,36 @@ public class RoutCalculatorTest extends TestCase {
                             |
                           third_5
         */
-//        routCalculator = new RouteCalculator(stationIndex);
-
-
-        routOnLine = new ArrayList<>();
-        routOnLine.add(stationIndex.getStation("third_1"));
-        routOnLine.add(stationIndex.getStation("third_2"));
-        routOnLine.add(stationIndex.getStation("third_3"));
-        routOnLine.add(stationIndex.getStation("third_4"));
+        routCalculator = new RouteCalculator(stationIndex);
     }
 
     public void testCalculateDurationOnline() {
+        List<Station> route = routCalculator.getShortestRoute(stationIndex.getStation("first_1"),
+                stationIndex.getStation("first_3"));
 
-        double actual = RouteCalculator.calculateDuration(routOnLine);
-        double expected = 7.5;
+        double actual = RouteCalculator.calculateDuration(route);
+        double expected = 5.0;
 
         assertEquals(actual, expected);
     }
 
+    public void testCalculateDurationWithOneConnection() {
+        List<Station> route = routCalculator.getShortestRoute(stationIndex.getStation("first_1"),
+                stationIndex.getStation("third_1"));
 
+        double actual = RouteCalculator.calculateDuration(route);
+        double expected = 6.0;
+
+        assertEquals(expected, actual);
+    }
+
+    public void testCalculateDurationWithTwoConnections() {
+        List<Station> route = routCalculator.getShortestRoute(stationIndex.getStation("first_1"),
+                stationIndex.getStation("second_3"));
+
+        double actual = RouteCalculator.calculateDuration(route);
+        double expected = 12.0;
+
+        assertEquals(expected, actual);
+    }
 }
