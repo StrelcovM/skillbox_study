@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+    <appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <File name="input_errors" fileName="08_ExceptionsDebuggingAndTesting/SPBMetro/logs/input_errors.log"
+              immediateFlush="false">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+
+        <File name="search" fileName="08_ExceptionsDebuggingAndTesting/SPBMetro/logs/search.log" immediateFlush="false">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+
+        <File name="exceptions_logger" fileName="08_ExceptionsDebuggingAndTesting/SPBMetro/logs/exceptions.log"
+              immediateFlush="false">
+            <PatternLayout pattern="%d{yyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </File>
+
+    </appenders>
+
+    <loggers>
+        <Root level="debug">
+        </Root>
+
+        <logger name="input_errors" level="debug">
+            <appender-ref ref="input_errors" level="debug"/>
+        </logger>
+
+        <logger name="search" level="debug">
+            <appender-ref ref="search" level="debug"/>
+        </logger>
+
+        <logger name="exception" level="error">
+            <appender-ref ref="exceptions_logger" level="error"/>
+        </logger>
+
+
+    </loggers>
+</configuration>
