@@ -7,11 +7,13 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="SPBMetro" />
+        <module name="MosMetro" />
         <module name="HomeWork_9.12" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="HomeWork_9.12" target="14" />
+      <module name="MosMetro" target="14" />
       <module name="SPBMetro" target="8" />
     </bytecodeTargetLevel>
   </component>
