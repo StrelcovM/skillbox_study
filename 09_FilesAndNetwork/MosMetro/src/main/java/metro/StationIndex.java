@@ -1,20 +1,24 @@
 package metro;
 
-import java.util.HashMap;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 public class StationIndex {
     private HashMap<String, Line> linesToNumber;
-    private Set<Station> stations;
+    private List<Station> stations;
 
     public StationIndex() {
         linesToNumber = new HashMap<>();
-        stations = new TreeSet<>();
+        stations = new ArrayList<>();
     }
 
     public void addLine(Line line) {
         linesToNumber.put(line.getLineNumber(), line);
+    }
+
+    public Line getLineByNumber(String number) {
+        if (linesToNumber.containsKey(number))
+            return linesToNumber.get(number);
+        return null;
     }
 
     public void addStation(Station station) {

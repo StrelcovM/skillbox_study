@@ -22,4 +22,8 @@ public class Line {
         return lineNumber;
     }
 
+    public void addStation(Station station) {
+        stationsList.add(station);
+    }
+
 }
