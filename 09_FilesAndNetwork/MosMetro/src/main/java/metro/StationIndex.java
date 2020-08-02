@@ -24,4 +24,8 @@ public class StationIndex {
     public void addStation(Station station) {
         stations.add(station);
     }
+
+    public HashMap<String, Line> getLinesToNumber() {
+        return linesToNumber;
+    }
 }

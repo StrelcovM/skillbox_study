@@ -26,4 +26,8 @@ public class Line {
         stationsList.add(station);
     }
 
+    public List<Station> getStationsList() {
+        return stationsList;
+    }
+
 }
