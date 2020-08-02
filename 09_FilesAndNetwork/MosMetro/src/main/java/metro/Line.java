@@ -5,10 +5,10 @@ import java.util.List;
 
 public class Line {
     private String name;
-    private int lineNumber;
+    private String lineNumber;
     private List<Station> stationsList;
 
-    public Line(String name, int lineNumber) {
+    public Line(String name, String lineNumber) {
         this.name = name;
         this.lineNumber = lineNumber;
         stationsList = new ArrayList<>();
@@ -18,7 +18,7 @@ public class Line {
         return name;
     }
 
-    public int getLineNumber() {
+    public String getLineNumber() {
         return lineNumber;
     }
 

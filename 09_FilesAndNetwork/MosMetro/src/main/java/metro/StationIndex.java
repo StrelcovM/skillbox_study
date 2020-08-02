@@ -5,7 +5,7 @@ import java.util.Set;
 import java.util.TreeSet;
 
 public class StationIndex {
-    private HashMap<Integer, Line> linesToNumber;
+    private HashMap<String, Line> linesToNumber;
     private Set<Station> stations;
 
     public StationIndex() {
