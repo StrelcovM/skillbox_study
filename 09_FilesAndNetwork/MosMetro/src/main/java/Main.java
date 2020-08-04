@@ -15,7 +15,7 @@ public class Main {
     private static Document document;
     private static StationIndex stationIndex;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
         createStationIndex();
         writeJSONObjectToFile(createJsonObject(), "09_FilesAndNetwork/MosMetro/src/main/resources/map.json");
     }
