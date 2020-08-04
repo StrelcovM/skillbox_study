@@ -9,18 +9,25 @@ import org.jsoup.select.Elements;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class Main {
     private static Document document;
     private static StationIndex stationIndex;
 
     public static void main(String[] args) {
+        String mapJsonFile = "09_FilesAndNetwork/MosMetro/src/main/resources/map.json";
+
         createStationIndex();
-        writeJSONObjectToFile(createJsonObject(), "09_FilesAndNetwork/MosMetro/src/main/resources/map.json");
+        writeJsonObjectToFile(createJsonObject(), mapJsonFile);
+
     }
 
-    private static void parseLine() {
+    private static void parseLineFromSite() {
         Elements elements = document.getElementsByAttributeValueStarting("class",
                 "js-metro-line");
         elements.forEach(element -> {
@@ -29,7 +36,7 @@ public class Main {
         });
     }
 
-    private static void parseStation() {
+    private static void parseStationFromSite() {
         Elements linesWithStations = document.getElementsByClass("js-metro-stations t-metrostation-list-table");
 
         linesWithStations.forEach(parseLine -> {
@@ -54,11 +61,11 @@ public class Main {
 
         stationIndex = new StationIndex();
 
-        parseLine();
-        parseStation();
+        parseLineFromSite();
+        parseStationFromSite();
     }
 
-    private static void writeJSONObjectToFile(JSONObject object, String path) {
+    private static void writeJsonObjectToFile(JSONObject object, String path) {
         try (FileWriter writer = new FileWriter(path)) {
 
             writer.write(object.toString());
@@ -98,4 +105,22 @@ public class Main {
 
         return map;
     }
+
+    private static String jsonFileAsString(String filePath) {
+        List<String> file = new ArrayList<>();
+        List<Line> lines;
+        StringBuilder builder = new StringBuilder();
+
+        try {
+            file = Files.readAllLines(Path.of(filePath));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        file.forEach(builder::append);
+
+        return builder.toString();
+    }
+
+
 }
