@@ -11,9 +11,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     private static Document document;
@@ -25,6 +23,8 @@ public class Main {
         createStationIndex();
         writeJsonObjectToFile(createJsonObject(), mapJsonFile);
 
+        Map<String, Integer> map = parseLineFromJson(jsonFileAsString(mapJsonFile));
+        map.forEach((key, value) -> System.out.println(key + " " + value));
     }
 
     private static void parseLineFromSite() {
@@ -108,7 +108,6 @@ public class Main {
 
     private static String jsonFileAsString(String filePath) {
         List<String> file = new ArrayList<>();
-        List<Line> lines;
         StringBuilder builder = new StringBuilder();
 
         try {
@@ -122,5 +121,19 @@ public class Main {
         return builder.toString();
     }
 
+    private static Map<String, Integer> parseLineFromJson(String jsonString) {
+        Map<String, Integer> lines = new HashMap<>();
 
+        JSONObject jsonObject = new JSONObject(jsonString);
+        JSONObject stations = (JSONObject) jsonObject.get("stations");
+        Set<String> linesName = stations.keySet();
+
+        linesName.forEach(name -> {
+            JSONArray stationsByLines = (JSONArray) stations.get(name);
+
+            lines.put(name, stationsByLines.length());
+        });
+
+        return lines;
+    }
 }
