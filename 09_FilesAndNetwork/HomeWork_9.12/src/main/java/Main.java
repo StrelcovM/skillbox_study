@@ -13,7 +13,7 @@ import java.util.Map;
 
 public class Main {
     private static Elements elements;
-    private static Map<String, String> images = new HashMap<>();
+    private static final Map<String, String> images = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
         try {
@@ -36,26 +36,17 @@ public class Main {
     }
 
     public static void savePic(Map<String, String> images) throws IOException {
-        InputStream is = null;
-        OutputStream os = null;
-
         for (Map.Entry<String, String> entry : images.entrySet()) {
-            try {
-                URL url = new URL(entry.getValue());
-                URLConnection connection = url.openConnection();
+            URL url = new URL(entry.getValue());
+            URLConnection connection = url.openConnection();
 
-                is = connection.getInputStream();
-                os = new FileOutputStream("09_FilesAndNetwork/HomeWork_9.12/images/"
-                        + entry.getKey());
-
+            try (InputStream is = connection.getInputStream();
+                 OutputStream os =
+                         new FileOutputStream("09_FilesAndNetwork/HomeWork_9.12/images/"
+                                 + entry.getKey())) {
                 is.transferTo(os);
             } catch (IOException e) {
                 e.printStackTrace();
-            } finally {
-                if (os != null)
-                    os.close();
-                if (is != null)
-                    is.close();
             }
         }
     }
