@@ -30,7 +30,7 @@ hs_err_pid*
 ### JetBrains ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
 # Reference: https://intellij-support.jetbrains.com/hc/en-us/articles/206544839
-
+.idea/*
 # User-specific stuff
 .idea/**/workspace.xml
 .idea/**/tasks.xml
@@ -65,7 +65,7 @@ hs_err_pid*
 # .idea/*.iml
 # .idea/modules
 # *.iml
-# *.ipr
+*.ipr
 
 # CMake
 cmake-build-*/
@@ -103,7 +103,7 @@ fabric.properties
 ### JetBrains Patch ###
 # Comment Reason: https://github.com/joeblau/gitignore.io/issues/186#issuecomment-215987721
 
-# *.iml
+*.iml
 # modules.xml
 # .idea/misc.xml
 # *.ipr

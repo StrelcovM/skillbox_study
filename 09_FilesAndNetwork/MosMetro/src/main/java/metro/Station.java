@@ -9,6 +9,8 @@ public class Station {
         this.line = line;
     }
 
+    public Station() {}
+
     public String getName() {
         return name;
     }

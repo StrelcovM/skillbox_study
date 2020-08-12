@@ -14,6 +14,9 @@ public class Line {
         stationsList = new ArrayList<>();
     }
 
+    public Line() {
+    }
+
     public String getName() {
         return name;
     }

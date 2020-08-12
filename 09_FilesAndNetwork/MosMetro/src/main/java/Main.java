@@ -1,3 +1,7 @@
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import metro.Line;
 import metro.Station;
 import metro.StationIndex;
@@ -7,10 +11,11 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.net.URI;
+import java.net.URL;
 import java.util.*;
 
 public class Main {
@@ -21,9 +26,13 @@ public class Main {
         String mapJsonFile = "09_FilesAndNetwork/MosMetro/src/main/resources/map.json";
 
         createStationIndex();
-        writeJsonObjectToFile(createJsonObject(), mapJsonFile);
+        try {
+            writeJsonObjectToFile(createJsonObject(stationIndex), mapJsonFile);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
 
-        Map<String, Integer> map = parseLineFromJson(jsonFileAsString(mapJsonFile));
+        Map<String, Integer> map = parseLineFromJson(mapJsonFile);
         map.forEach((key, value) -> System.out.println(key + " " + value));
     }
 
@@ -65,10 +74,10 @@ public class Main {
         parseStationFromSite();
     }
 
-    private static void writeJsonObjectToFile(JSONObject object, String path) {
+    private static void writeJsonObjectToFile(String object, String path) {
         try (FileWriter writer = new FileWriter(path)) {
 
-            writer.write(object.toString());
+            writer.write(object);
             writer.flush();
 
         } catch (IOException e) {
@@ -76,63 +85,27 @@ public class Main {
         }
     }
 
-    private static JSONObject createJsonObject() {
-        JSONObject map = new JSONObject();
-        JSONObject stations = new JSONObject();
-        JSONArray linesArray = new JSONArray();
+    private static String createJsonObject(Object object) throws JsonProcessingException {
 
-        HashMap<String, Line> lineToNumbers = stationIndex.getLinesToNumber();
-
-        lineToNumbers.forEach((key, value) -> {
-            JSONArray stationsNames = new JSONArray();
-
-            value.getStationsList().forEach(name -> stationsNames.put(name.getName()));
-
-            stations.put(key, stationsNames);
-        });
-
-        lineToNumbers.forEach((key, value) -> {
-            JSONObject line = new JSONObject();
-
-            line.put("number", key);
-            line.put("name", value.getName());
-
-            linesArray.put(line);
-        });
-
-        map.put("stations", stations);
-        map.put("lines", linesArray);
-
-        return map;
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(object);
     }
 
-    private static String jsonFileAsString(String filePath) {
-        List<String> file = new ArrayList<>();
-        StringBuilder builder = new StringBuilder();
+    private static Map<String, Integer> parseLineFromJson(String filePath) {
+        StationIndex index = new StationIndex();
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Integer> lines = new HashMap<>();
+        Map<String, Line> linesToNumber;
 
         try {
-            file = Files.readAllLines(Path.of(filePath));
+            index = mapper.readValue(new FileReader(filePath), StationIndex.class);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        file.forEach(builder::append);
+        linesToNumber = index.getLinesToNumber();
 
-        return builder.toString();
-    }
-
-    private static Map<String, Integer> parseLineFromJson(String jsonString) {
-        Map<String, Integer> lines = new HashMap<>();
-
-        JSONObject jsonObject = new JSONObject(jsonString);
-        JSONObject stations = (JSONObject) jsonObject.get("stations");
-        Set<String> linesName = stations.keySet();
-
-        linesName.forEach(name -> {
-            JSONArray stationsByLines = (JSONArray) stations.get(name);
-
-            lines.put(name, stationsByLines.length());
-        });
+        linesToNumber.forEach((key, value) -> lines.put(key, value.getStationsList().size()));
 
         return lines;
     }
