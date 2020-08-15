@@ -10,12 +10,9 @@ import java.util.*;
 public class Main {
     public static void main(String[] args) {
         String mapJsonFile = "09_FilesAndNetwork/MosMetro/src/main/resources/map.json";
-        String siteURL = "https://www.moscowmap.ru/metro.html#lines";
-        StationIndex stationIndex;
-        SiteParser parser = new SiteParser();
+        SiteParser parser = new SiteParser("https://www.moscowmap.ru/metro.html#lines");
 
-        stationIndex = parser.getStationIndexFromSite(siteURL);
-        parser.write(stationIndex, mapJsonFile);
+        parser.write(parser.getStationIndexFromSite(), mapJsonFile);
 
         Map<String, Integer> map = parseLineFromJson(mapJsonFile);
         map.forEach((key, value) -> System.out.println(key + " " + value));

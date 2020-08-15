@@ -12,16 +12,18 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class SiteParser {
-    Document document;
-    StationIndex stationIndex;
+    private Document document;
+    private StationIndex stationIndex;
+    private String siteURL;
 
-    public SiteParser() {
+    public SiteParser(String siteURL) {
+        this.siteURL = siteURL;
         stationIndex = new StationIndex();
     }
 
-    public StationIndex getStationIndexFromSite(String url) {
+    public StationIndex getStationIndexFromSite() {
         try {
-            document = Jsoup.connect(url).maxBodySize(0).get();
+            document = Jsoup.connect(siteURL).maxBodySize(0).get();
         } catch (IOException e) {
             e.printStackTrace();
         }
