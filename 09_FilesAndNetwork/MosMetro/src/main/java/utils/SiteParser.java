@@ -30,8 +30,8 @@ public class SiteParser {
         return parseStationIndexFromSite();
     }
 
-    public void write(Object object, String path) {
-        try (FileWriter writer = new FileWriter(path)) {
+    public void write(Object object) {
+        try (FileWriter writer = new FileWriter("09_FilesAndNetwork/MosMetro/src/main/resources/map.json")) {
             writer.write(new ObjectMapper().writeValueAsString(object));
             writer.flush();
         } catch (IOException e) {
