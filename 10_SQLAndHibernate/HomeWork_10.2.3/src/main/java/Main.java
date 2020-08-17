@@ -18,5 +18,9 @@ public class Main {
             System.out.println(resultSet.getString(1) + " " + resultSet.getString(2));
         }
 
+        resultSet.close();
+        statement.close();
+        connection.close();
+
     }
 }
