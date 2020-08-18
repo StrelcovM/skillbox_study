@@ -5,6 +5,8 @@ import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 
+import java.math.BigInteger;
+
 public class Main {
     public static void main(String[] args) {
         StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
@@ -14,9 +16,15 @@ public class Main {
         SessionFactory sessionFactory = metadata.getSessionFactoryBuilder().build();
         Session session = sessionFactory.openSession();
 
-        Course course = session.get(Course.class, 1);
+        BigInteger countCourses = (BigInteger) session
+                .createSQLQuery("SELECT COUNT(*) FROM skillbox.courses")
+                .uniqueResult();
 
-        System.out.println(course.getName());
+        int count = countCourses.intValue();
 
+        for(int i = 1; i < count; i++) {
+            Course course = session.get(Course.class, i);
+            System.out.println(course.getName() + " " + course.getStudentsCount());
+        }
     }
 }
