@@ -12,8 +12,32 @@ public class Subscription {
     @EmbeddedId
     private SubscriptionKey key;
 
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "student_id",referencedColumnName = "id", insertable = false, updatable = false)
+    private Student student;
+
+    @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @JoinColumn(name = "course_id", referencedColumnName = "id", insertable = false, updatable = false)
+    private Course course;
+
     @Column(name = "subscription_date")
     private Date subscriptionDate;
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
     public Date getSubscriptionDate() {
         return subscriptionDate;
@@ -35,14 +59,12 @@ public class Subscription {
     public static class SubscriptionKey implements Serializable {
         static final long serialVersionUID = 21L;
 
-        @Id
-        @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-        @JoinColumn(name = "student_id",referencedColumnName = "id", insertable = false, updatable = false)
+        @OneToOne
+        @JoinColumn(name = "student_id", insertable = false, updatable = false)
         private Student student;
 
-        @Id
-        @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-        @JoinColumn(name = "course_id", referencedColumnName = "id", insertable = false, updatable = false)
+        @OneToOne
+        @JoinColumn(name = "course_id", insertable = false, updatable = false)
         private Course course;
 
         public SubscriptionKey() {
