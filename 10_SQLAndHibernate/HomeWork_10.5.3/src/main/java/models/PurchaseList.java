@@ -6,14 +6,10 @@ import java.util.Date;
 
 @Entity
 @Table(name = "purchaselist")
+@IdClass(PurchaseList.PurchaseKey.class)
 public class PurchaseList {
     @EmbeddedId
     private PurchaseKey key;
-
-    @Column(name = "student_name", insertable = false, updatable = false)
-    private String studentName;
-    @Column(name = "course_name", insertable = false, updatable = false)
-    private String courseName;
 
     private int price;
 
@@ -22,9 +18,11 @@ public class PurchaseList {
 
     @Embeddable
     public static class PurchaseKey implements Serializable {
+        @Id
         @Column(name = "student_name")
-        private String student;
+        private String studentName;
 
+        @Id
         @Column(name = "course_name")
         private String CourseName;
 
@@ -32,16 +30,16 @@ public class PurchaseList {
         }
 
         public PurchaseKey(String student, String courseName) {
-            this.student = student;
+            this.studentName = student;
             CourseName = courseName;
         }
 
-        public String getStudent() {
-            return student;
+        public String getStudentName() {
+            return studentName;
         }
 
-        public void setStudent(String student) {
-            this.student = student;
+        public void setStudentName(String studentName) {
+            this.studentName = studentName;
         }
 
         public String getCourseName() {

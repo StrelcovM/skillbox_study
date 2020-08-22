@@ -13,7 +13,7 @@ public class Teacher {
     private int salary;
     private int age;
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "teacher", cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     private List<Course> courses;
 
     public int getId() {

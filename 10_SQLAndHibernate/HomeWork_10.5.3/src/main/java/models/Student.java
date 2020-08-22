@@ -22,7 +22,7 @@ public class Student {
             inverseJoinColumns = {@JoinColumn(name = "course_id")})
     private List<Course> courses;
 
-    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "student")
     private List<Subscription> subscriptions;
 
     public int getId() {

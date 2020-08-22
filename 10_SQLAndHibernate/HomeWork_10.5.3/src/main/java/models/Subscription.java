@@ -7,6 +7,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "subscriptions")
+@IdClass(Subscription.SubscriptionKey.class)
 public class Subscription {
     @EmbeddedId
     private SubscriptionKey key;
@@ -34,12 +35,14 @@ public class Subscription {
     public static class SubscriptionKey implements Serializable {
         static final long serialVersionUID = 21L;
 
-        @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-        @JoinColumn(name = "student_id")
+        @Id
+        @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+        @JoinColumn(name = "student_id",referencedColumnName = "id", insertable = false, updatable = false)
         private Student student;
 
-        @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-        @JoinColumn(name = "course_id")
+        @Id
+        @ManyToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+        @JoinColumn(name = "course_id", referencedColumnName = "id", insertable = false, updatable = false)
         private Course course;
 
         public SubscriptionKey() {
