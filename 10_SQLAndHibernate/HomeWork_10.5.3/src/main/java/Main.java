@@ -1,4 +1,4 @@
-import models.Student;
+import models.PurchaseList;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;
@@ -13,9 +13,9 @@ public class Main {
              SessionFactory sessionFactory = new MetadataSources(registry).getMetadataBuilder().build().getSessionFactoryBuilder().build();
              Session session = sessionFactory.openSession()) {
 
-            Student student = session.get(Student.class, 8);
+            PurchaseList purchaseList = session.get(PurchaseList.class, new PurchaseList.PurchaseKey("Носов Макар", "Мобильный разработчик с нуля"));
 
-            student.getSubscriptions().forEach(el -> System.out.println(el.getKey().getCourse().getName()));
+            System.out.println(purchaseList.getPrice());
         }
     }
 }

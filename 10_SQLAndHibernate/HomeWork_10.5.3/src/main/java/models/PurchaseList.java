@@ -11,6 +11,12 @@ public class PurchaseList {
     @EmbeddedId
     private PurchaseKey key;
 
+    @Column(name = "student_name")
+    private String studentName;
+
+    @Column(name = "course_name")
+    private String courseName;
+
     private int price;
 
     @Column(name = "subscription_date")
@@ -19,19 +25,19 @@ public class PurchaseList {
     @Embeddable
     public static class PurchaseKey implements Serializable {
         @Id
-        @Column(name = "student_name")
+        @Column(name = "student_name", insertable = false, updatable = false)
         private String studentName;
 
         @Id
-        @Column(name = "course_name")
-        private String CourseName;
+        @Column(name = "course_name", insertable = false, updatable = false)
+        private String courseName;
 
         public PurchaseKey() {
         }
 
         public PurchaseKey(String student, String courseName) {
             this.studentName = student;
-            CourseName = courseName;
+            this.courseName = courseName;
         }
 
         public String getStudentName() {
@@ -43,12 +49,28 @@ public class PurchaseList {
         }
 
         public String getCourseName() {
-            return CourseName;
+            return courseName;
         }
 
         public void setCourseName(String courseName) {
-            CourseName = courseName;
+            this.courseName = courseName;
         }
+    }
+
+    public String getStudentName() {
+        return studentName;
+    }
+
+    public void setStudentName(String studentName) {
+        this.studentName = studentName;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
     }
 
     public int getPrice() {
