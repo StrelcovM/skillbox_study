@@ -40,6 +40,9 @@ public class Course {
     inverseJoinColumns = {@JoinColumn(name = "student_id")})
     private List<Student> students;
 
+    @OneToMany(cascade = CascadeType.REMOVE, fetch = FetchType.EAGER, mappedBy = "course")
+    private List<Subscription> subscriptions;
+
     public int getId() {
         return id;
     }

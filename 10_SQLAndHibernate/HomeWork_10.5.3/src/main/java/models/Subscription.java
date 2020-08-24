@@ -7,7 +7,6 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "subscriptions")
-@IdClass(Subscription.SubscriptionKey.class)
 public class Subscription {
     @EmbeddedId
     private SubscriptionKey key;
@@ -57,38 +56,37 @@ public class Subscription {
 
     @Embeddable
     public static class SubscriptionKey implements Serializable {
-        static final long serialVersionUID = 21L;
 
-        @OneToOne
-        @JoinColumn(name = "student_id", insertable = false, updatable = false)
-        private Student student;
+        private static final long serialVersionUID = 21L;
 
-        @OneToOne
-        @JoinColumn(name = "course_id", insertable = false, updatable = false)
-        private Course course;
+        @Column(name = "student_id")
+        private int studentId;
+
+        @Column(name = "course_id")
+        private int courseId;
+
+        public SubscriptionKey(int studentId, int courseId) {
+            this.studentId = studentId;
+            this.courseId = courseId;
+        }
 
         public SubscriptionKey() {
         }
 
-        public SubscriptionKey(Student student, Course course) {
-            this.student = student;
-            this.course = course;
+        public int getStudentId() {
+            return studentId;
         }
 
-        public Student getStudent() {
-            return student;
+        public void setStudentId(int studentId) {
+            this.studentId = studentId;
         }
 
-        public void setStudent(Student student) {
-            this.student = student;
+        public int getCourseId() {
+            return courseId;
         }
 
-        public Course getCourse() {
-            return course;
-        }
-
-        public void setCourse(Course course) {
-            this.course = course;
+        public void setCourseId(int courseId) {
+            this.courseId = courseId;
         }
 
         @Override
@@ -96,13 +94,13 @@ public class Subscription {
             if (this == o) return true;
             if (o == null || getClass() != o.getClass()) return false;
             SubscriptionKey that = (SubscriptionKey) o;
-            return Objects.equals(student, that.student) &&
-                    Objects.equals(course, that.course);
+            return studentId == that.studentId &&
+                    courseId == that.courseId;
         }
 
         @Override
         public int hashCode() {
-            return Objects.hash(student, course);
+            return Objects.hash(studentId, courseId);
         }
     }
 }

@@ -3,19 +3,13 @@ package models;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 @Table(name = "purchaselist")
-@IdClass(PurchaseList.PurchaseKey.class)
 public class PurchaseList {
     @EmbeddedId
     private PurchaseKey key;
-
-    @Column(name = "student_name")
-    private String studentName;
-
-    @Column(name = "course_name")
-    private String courseName;
 
     private int price;
 
@@ -24,11 +18,12 @@ public class PurchaseList {
 
     @Embeddable
     public static class PurchaseKey implements Serializable {
-        @Id
+
+        private static final long serialVersionUID = 2472129826645489974L;
+
         @Column(name = "student_name", insertable = false, updatable = false)
         private String studentName;
 
-        @Id
         @Column(name = "course_name", insertable = false, updatable = false)
         private String courseName;
 
@@ -55,22 +50,20 @@ public class PurchaseList {
         public void setCourseName(String courseName) {
             this.courseName = courseName;
         }
-    }
 
-    public String getStudentName() {
-        return studentName;
-    }
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (o == null || getClass() != o.getClass()) return false;
+            PurchaseKey that = (PurchaseKey) o;
+            return Objects.equals(studentName, that.studentName) &&
+                    Objects.equals(courseName, that.courseName);
+        }
 
-    public void setStudentName(String studentName) {
-        this.studentName = studentName;
-    }
-
-    public String getCourseName() {
-        return courseName;
-    }
-
-    public void setCourseName(String courseName) {
-        this.courseName = courseName;
+        @Override
+        public int hashCode() {
+            return Objects.hash(studentName, courseName);
+        }
     }
 
     public int getPrice() {
