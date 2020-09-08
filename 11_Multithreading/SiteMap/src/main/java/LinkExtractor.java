@@ -47,18 +47,10 @@ public class LinkExtractor extends RecursiveAction {
         if (document != null) {
             elements = document.getElementsByTag("a");
 
-            //обработка ссылок на странице
             elements.forEach(element -> {
-                String currentLink = element.attr("href");
+                String currentLink = element.absUrl("href");
 
-                //конвертация ссылки типа "/course/" в полную ссылку
-                if (currentLink.matches("/.+/"))
-                    currentLink = Main.site + currentLink;
-                //коныертация ссылки типа "course/" в полную ссылку
-                else if (currentLink.matches(".+/") && !currentLink.startsWith("http"))
-                    currentLink = link + currentLink;
-
-                if (checkLink(currentLink) && !mapSite.contains(currentLink)) {
+                if (currentLink.startsWith(link) && !currentLink.contains("#") && !mapSite.contains(currentLink)) {
                     if (currentLink.endsWith("/")) {
                         mapSite.add(currentLink);
                         LinkExtractor extractor = new LinkExtractor(currentLink, mapSite);
@@ -69,9 +61,5 @@ public class LinkExtractor extends RecursiveAction {
             });
         }
         return extractors;
-    }
-
-    private boolean checkLink(String checkedLink) {
-        return checkedLink.startsWith(link) && !checkedLink.contains("#");
     }
 }
