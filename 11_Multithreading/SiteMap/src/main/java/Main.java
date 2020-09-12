@@ -11,6 +11,12 @@ public class Main {
         ForkJoinPool fjp = new ForkJoinPool();
         fjp.invoke(new LinkExtractor(site, siteMap));
 
-        siteMap.forEach(System.out::println);
+        siteMap.forEach(System.out:: println);
+
+//        siteMap.forEach(link -> {
+//            StringBuilder stringBuilder = new StringBuilder();
+//            stringBuilder.append(link.substring(site.length()));
+//            System.out.println(stringBuilder.toString());
+//        });
     }
 }

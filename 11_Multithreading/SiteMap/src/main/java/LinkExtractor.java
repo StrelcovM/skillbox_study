@@ -50,14 +50,13 @@ public class LinkExtractor extends RecursiveAction {
             elements.forEach(element -> {
                 String currentLink = element.absUrl("href");
 
-                if (currentLink.startsWith(link) && !currentLink.contains("#") && !mapSite.contains(currentLink)) {
+                if (currentLink.startsWith/*this ->*/(Main.site) && !currentLink.contains("#") && !mapSite.contains(currentLink))
                     if (currentLink.endsWith("/")) {
                         mapSite.add(currentLink);
                         LinkExtractor extractor = new LinkExtractor(currentLink, mapSite);
                         extractor.fork();
                         extractors.add(extractor);
                     } else mapSite.add(currentLink);
-                }
             });
         }
         return extractors;
