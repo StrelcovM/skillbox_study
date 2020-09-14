@@ -5,26 +5,32 @@ import org.jsoup.select.Elements;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.concurrent.RecursiveAction;
+import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.RecursiveTask;
 
-public class LinkExtractor extends RecursiveAction {
+public class LinkExtractor extends RecursiveTask<CopyOnWriteArraySet<String>> {
     private static final long serialVersionUID = -4221520778777621224L;
+    private static String startUrl = "";
     private final String link;
-    private final Set<String> mapSite;
+    private final static CopyOnWriteArraySet<String> mapSite = new CopyOnWriteArraySet<>();
 
-    public LinkExtractor(String link, Set<String> mapSite) {
-        this.mapSite = mapSite;
+    public LinkExtractor(String url, String link) {
+        this.link = link;
+        startUrl = url;
+    }
+
+    private LinkExtractor(String link) {
         this.link = link;
     }
 
     @Override
-    protected void compute() {
-
+    protected CopyOnWriteArraySet<String> compute() {
         List<LinkExtractor> extractors = getChildren();
+
         if (!extractors.isEmpty())
             for (LinkExtractor extractor : extractors)
                 extractor.join();
+        return mapSite;
     }
 
     private List<LinkExtractor> getChildren() {
@@ -50,10 +56,10 @@ public class LinkExtractor extends RecursiveAction {
             elements.forEach(element -> {
                 String currentLink = element.absUrl("href");
 
-                if (currentLink.startsWith/*this ->*/(Main.site) && !currentLink.contains("#") && !mapSite.contains(currentLink))
+                if (currentLink.startsWith(startUrl) && !currentLink.contains("#") && !mapSite.contains(currentLink))
                     if (currentLink.endsWith("/")) {
                         mapSite.add(currentLink);
-                        LinkExtractor extractor = new LinkExtractor(currentLink, mapSite);
+                        LinkExtractor extractor = new LinkExtractor(currentLink);
                         extractor.fork();
                         extractors.add(extractor);
                     } else mapSite.add(currentLink);
