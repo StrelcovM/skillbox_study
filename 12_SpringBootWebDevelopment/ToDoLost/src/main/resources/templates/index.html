@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Todo list</title>
+</head>
+<body>
+<table th:each="task : ${taskList}">
+    <tr>
+        <td><p th:text="${task.getAuthorName()}"></p></td>
+        <td><p th:text="${task.getDescription()}"></p></td>
+        <td><p th:text="${task.getDateOfAdding()}"></p></td>
+        <td>
+            <form th:action="'/delete/' + ${task.getId()}" method="post">
+                <button th:text="delete" type="submit"></button>
+            </form>
+        </td>
+    </tr>
+</table>
+<a href="/add">add new task</a><br>
+</body>
+</html>
