@@ -1,5 +1,7 @@
 package ru.strelkov.todolist.models;
 
+import org.springframework.lang.NonNull;
+
 import java.util.Date;
 
 public class Task {
@@ -12,7 +14,7 @@ public class Task {
         dateOfAdding = new Date();
     }
 
-    public Task(String authorName, String description) {
+    public Task(@NonNull String authorName, @NonNull String description) {
         this.authorName = authorName;
         this.description = description;
         dateOfAdding = new Date();
@@ -44,5 +46,15 @@ public class Task {
 
     public Date getDateOfAdding() {
         return dateOfAdding;
+    }
+
+    @Override
+    public String toString() {
+        return "Task{" +
+                "id=" + id +
+                ", authorName='" + authorName + '\'' +
+                ", description='" + description + '\'' +
+                ", dateOfAdding=" + dateOfAdding +
+                '}';
     }
 }

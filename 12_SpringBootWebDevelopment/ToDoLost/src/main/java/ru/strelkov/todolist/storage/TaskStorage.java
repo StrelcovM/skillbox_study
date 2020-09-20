@@ -17,23 +17,34 @@ public class TaskStorage {
     }
 
     public Task getById(int id) {
-        if(taskHashMap.containsKey(id))
+        if (taskHashMap.containsKey(id))
             return taskHashMap.get(id);
         return null;
     }
 
-    public int add(Task task) {
-        int id =  currentId++;
+    public void add(Task task) {
+        int id = currentId++;
         task.setId(id);
         taskHashMap.put(id, task);
-        return id;
     }
 
     public int delete(int id) {
-        if(taskHashMap.containsKey(id)) {
+        if (taskHashMap.containsKey(id)) {
             taskHashMap.remove(id);
             return id;
         }
         return -1;
+    }
+
+    public void deleteAll() {
+        taskHashMap.clear();
+    }
+
+    public boolean edit(Task task) {
+        if (taskHashMap.containsKey(task.getId())) {
+            taskHashMap.put(task.getId(), task);
+            return true;
+        }
+        return false;
     }
 }
