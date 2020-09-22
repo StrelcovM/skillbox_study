@@ -10,10 +10,10 @@ import java.util.List;
 @Component
 public class TaskStorage {
     private static int currentId = 1;
-    private static final HashMap<Integer, Task> taskHashMap = new HashMap<Integer, Task>();
+    private static final HashMap<Integer, Task> taskHashMap = new HashMap<>();
 
     public List<Task> getAll() {
-        return new ArrayList<Task>(taskHashMap.values());
+        return new ArrayList<>(taskHashMap.values());
     }
 
     public Task getById(int id) {
@@ -21,7 +21,6 @@ public class TaskStorage {
             return taskHashMap.get(id);
         return null;
     }
-
     public void add(Task task) {
         int id = currentId++;
         task.setId(id);

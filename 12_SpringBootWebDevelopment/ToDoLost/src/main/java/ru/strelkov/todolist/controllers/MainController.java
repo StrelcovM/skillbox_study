@@ -5,26 +5,26 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.strelkov.todolist.models.Task;
-import ru.strelkov.todolist.storage.TaskStorage;
+import ru.strelkov.todolist.service.TaskService;
 
 import java.util.List;
 
 @RestController
 public class MainController {
-    private final TaskStorage storage;
+    private final TaskService taskService;
 
     @Autowired
-    public MainController(TaskStorage storage) {
-        this.storage = storage;
-        storage.add(new Task("Max", "Task #1"));
-        storage.add(new Task("Tin", "Task #2"));
-        storage.add(new Task("Alex", "Task #3"));
-        storage.add(new Task("Genri", "Task #5"));
+    public MainController(TaskService taskService) {
+        this.taskService = taskService;
+        taskService.save(new Task("Max", "Task #1"));
+        taskService.save(new Task("Tin", "Task #2"));
+        taskService.save(new Task("Alex", "Task #3"));
+        taskService.save(new Task("Genri", "Task #5"));
     }
 
     @GetMapping("/tasks")
     public ResponseEntity<List<Task>> list() {
-        List<Task> taskList = storage.getAll();
+        List<Task> taskList = taskService.getAll();
         if (taskList.size() > 0)
             return new ResponseEntity<>(taskList, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -32,7 +32,7 @@ public class MainController {
 
     @GetMapping("/tasks/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable("id") int id) {
-        Task task = storage.getById(id);
+        Task task = taskService.getById(id);
         if (task != null)
             return new ResponseEntity<>(task, HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -40,8 +40,7 @@ public class MainController {
 
     @PostMapping("/tasks")
     public ResponseEntity<Task> addTask(@RequestBody Task task) {
-        storage.add(task);
-        return new ResponseEntity<>(task, HttpStatus.CREATED);
+        return new ResponseEntity<>(taskService.save(task), HttpStatus.CREATED);
     }
 
     @PostMapping("/tasks/{id}")
@@ -51,13 +50,13 @@ public class MainController {
 
     @DeleteMapping("/tasks")
     public ResponseEntity<HttpStatus> deleteAll() {
-        storage.deleteAll();
+        taskService.deleteAll();
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @DeleteMapping("/tasks/{id}")
     public ResponseEntity<Integer> deleteTask(@PathVariable(name = "id") int id) {
-        if (storage.delete(id) != -1)
+        if (taskService.deleteById(id))
             return new ResponseEntity<>(id, HttpStatus.OK);
         return new ResponseEntity<>(id, HttpStatus.NOT_FOUND);
     }
@@ -65,16 +64,16 @@ public class MainController {
     @PutMapping("/tasks")
     public ResponseEntity<HttpStatus> editMoreThanOne(@RequestBody List<Task> taskList) {
         for (Task task : taskList)
-            if (storage.getById(task.getId()) == null)
+            if (taskService.getById(task.getId()) == null)
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        taskList.forEach(storage::edit);
+        taskList.forEach(taskService::edit);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("/tasks/{id}")
     public ResponseEntity<HttpStatus> edit(@RequestBody Task task, @PathVariable("id") int id) {
         task.setId(id);
-        if (storage.edit(task))
+        if (taskService.edit(task))
             return new ResponseEntity<>(HttpStatus.OK);
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

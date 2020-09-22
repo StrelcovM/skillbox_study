@@ -1,13 +1,22 @@
 package ru.strelkov.todolist.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.lang.NonNull;
 
+import javax.persistence.*;
 import java.util.Date;
 
+@Entity
+@Table(name = "task")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Task {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Integer id;
+    @Column(name = "author_name")
     private String authorName;
     private String description;
+    @Column(name = "date_of_adding")
     private final Date dateOfAdding;
 
     public Task() {
@@ -20,11 +29,11 @@ public class Task {
         dateOfAdding = new Date();
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
