@@ -7,16 +7,10 @@
 <body>
 <table th:each="task : ${taskList}">
     <tr>
-        <td><p th:text="${task.getAuthorName()}"></p></td>
-        <td><p th:text="${task.getDescription()}"></p></td>
-        <td><p th:text="${task.getDateOfAdding()}"></p></td>
-        <td>
-            <form th:action="'/delete/' + ${task.getId()}" method="post">
-                <button th:text="delete" type="submit"></button>
-            </form>
-        </td>
+        <td><p th:text="'author: ' + ${task.getAuthorName()}"></p></td>
+        <td><p th:text="'task: ' + ${task.getDescription()}"></p></td>
+        <td><p th:text="'date of adding: ' + ${task.getDateOfAdding()}"></p></td>
     </tr>
 </table>
-<a href="/add">add new task</a><br>
 </body>
 </html>
