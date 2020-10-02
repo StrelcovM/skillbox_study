@@ -15,9 +15,31 @@ public class Main {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
         while(true) {
-            switch (reader.readLine()) {
-                case () :
-            }
+            var cmd = reader.readLine();
+            if(cmd.startsWith("ДОБАВИТЬ_ТОВАР"))
+                addProduct(cmd);
+            if(cmd.startsWith("ДОБАВИТЬ_МАГАЗИН"))
+                addShop(cmd);
+            if(cmd.startsWith("ВЫСТАВИТЬ_ТОВАР"))
+                addProductInShop(cmd);
+            if(cmd.startsWith("СТАТИСТИКА_ТОВАРОВ"))
+                statistic();
         }
+    }
+
+    private static void addProduct(String cmd) {
+        String[] data = cmd.split(" ");
+    }
+
+    private static void addShop(String cmd) {
+        String[] data = cmd.split(" ");
+    }
+
+    private static void addProductInShop(String cmd) {
+        String[] data = cmd.split(" ");
+    }
+
+    private static String statistic() {
+        return null;
     }
 }
