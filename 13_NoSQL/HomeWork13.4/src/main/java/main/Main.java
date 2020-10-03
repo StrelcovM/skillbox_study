@@ -9,6 +9,7 @@ import org.bson.Document;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Collections;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -21,7 +22,7 @@ public class Main {
     static {
         PRODUCTS.drop();
         SHOPS.drop();
-        SHOPS.insertOne(new Document(Map.of("name", "магазин_1", "prod", "[вафли]")));
+        SHOPS.insertOne(new Document(Map.of("name", "магазин_1", "prod", Collections.emptyList())));
         PRODUCTS.insertOne(new Document(Map.of("name", "вафли", "price", "50")));
     }
 
@@ -59,13 +60,19 @@ public class Main {
             throw new RuntimeException("invalid cmd");
         SHOPS.updateOne(
                 new Document("name", data[1]),
-                new Document("$set", new Document("prod", "[]")),
+                new Document("$set", new Document("prod", Collections.emptyList())),
                 new UpdateOptions().upsert(true)
         );
     }
 
     private static void addProductInShop(String cmd) {
         String[] data = cmd.split(" ");
+        if (data.length != 3)
+            throw new RuntimeException("invalid cmd");
+        SHOPS.findOneAndUpdate(
+                new Document("name", data[1]),
+                new Document("$push", new Document("prod", data[2]))
+        );
     }
 
     private static String statistic() {
