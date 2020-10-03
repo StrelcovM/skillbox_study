@@ -57,9 +57,11 @@ public class Main {
         String[] data = cmd.split(" ");
         if (data.length != 2)
             throw new RuntimeException("invalid cmd");
-        SHOPS.updateOne(new Document(Map.of("name", data[1])),
+        SHOPS.updateOne(
+                new Document("name", data[1]),
                 new Document("$set", new Document("prod", "[]")),
-                new UpdateOptions().upsert(true));
+                new UpdateOptions().upsert(true)
+        );
     }
 
     private static void addProductInShop(String cmd) {
