@@ -93,7 +93,11 @@ public class Main {
         BsonDocument query1 = BsonDocument
                 .parse("{ $group: {_id: \"$name\"," +
                         "products_count: {$sum :1}," +
-                        "avg_products_price: {$avg:\"$prods.price\"}}}");
+                        "avg_products_price: {$avg:\"$prods.price\"}," +
+                        "min_price: {$min:\"$prods.price\"}," +
+                        "max_price: {$max:\"$prods.price\"}," +
+                        "count_less_100: {$lt:[\"$prods.price\", 100]} " +
+                        "}}");
 
         SHOPS.aggregate(Arrays.asList(query2, query, query1)).forEach((Consumer<Document>) doc -> {
             builder.append(doc);
