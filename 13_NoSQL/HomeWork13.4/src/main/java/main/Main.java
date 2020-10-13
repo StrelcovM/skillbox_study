@@ -83,23 +83,28 @@ public class Main {
 
     private static String statistic() {
         StringBuilder builder = new StringBuilder();
-        BsonDocument query2 = BsonDocument
-                .parse("{$lookup: {from: \"products\"," +
-                        "localField: \"prod\"," +
-                        "foreignField: \"name\"," +
-                        " as: \"prods\"}}");
+        BsonDocument query1 = BsonDocument.parse("{$lookup: {from: \"products\"," +
+                "localField: \"prod\"," +
+                "foreignField: \"name\"," +
+                " as: \"prods\"}}");
+        BsonDocument query2 = BsonDocument.parse("{ $unwind: \"$prods\"}");
+        BsonDocument query3 = BsonDocument.parse("{ $group: {_id: \"$name\"," +
+                "products_count: {$sum :1}," +
+                "avg_products_price: {$avg:\"$prods.price\"}," +
+                "min_price: {$min:\"$prods.price\"}," +
+                "max_price: {$max:\"$prods.price\"}," +
+                "}}");
+        BsonDocument query4;
 
-        BsonDocument query = BsonDocument.parse("{ $unwind: \"$prods\"}");
-        BsonDocument query1 = BsonDocument
-                .parse("{ $group: {_id: \"$name\"," +
-                        "products_count: {$sum :1}," +
-                        "avg_products_price: {$avg:\"$prods.price\"}," +
-                        "min_price: {$min:\"$prods.price\"}," +
-                        "max_price: {$max:\"$prods.price\"}," +
-                        "count_less_100: {$lt:[\"$prods.price\", 100]} " +
-                        "}}");
+        SHOPS.aggregate(Arrays.asList(query1, query2, query3)).forEach((Consumer<Document>) doc -> {
+            builder.append(doc);
+            builder.append("\n\n");
+        });
 
-        SHOPS.aggregate(Arrays.asList(query2, query, query1)).forEach((Consumer<Document>) doc -> {
+        query3 = BsonDocument.parse("{$match:{\"prods.price\":{$lt : 100}}}");
+        query4 = BsonDocument.parse("{ $group: { _id: \"$name\", less_then_a_100: { $sum: 1 } } }");
+
+        SHOPS.aggregate(Arrays.asList(query1, query2, query3, query4)).forEach((Consumer<Document>) doc -> {
             builder.append(doc);
             builder.append("\n\n");
         });
